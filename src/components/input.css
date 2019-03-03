@@ -1,0 +1,54 @@
+.input {
+    flex: 1;
+    display: flex;
+    flex-direction: row-reverse;
+    margin: 0 1rem 1rem;
+
+    & .icon {
+        color: #FFF;
+        width: 30px;
+        margin-right: 10px;
+        align-items: center;
+        justify-content: center;
+        border-bottom: 3px solid #FFF;
+        transition: .2s all;
+        display: none;
+    }
+
+    & input {
+        background: none;
+        flex: 1;
+        border: none;
+        border-bottom: 1px solid #FFF;
+        height: 40px;
+        color: #FFF;
+        outline: none;
+        font-size: 16px;
+        transition: .2s all;
+
+        &:valid ~ .mod-ok {
+            display: flex;
+        }
+
+        &:invalid ~ .mod-error {
+            display: flex;
+        }
+
+        &:placeholder-shown ~ .mod-default {
+            display: flex;
+        }
+        
+        &:placeholder-shown ~ .mod-error {
+            display: none;
+        }
+        
+        &:focus {
+            border-bottom-color: #e50040;
+            
+            & ~ .icon {
+                border-bottom-color: #e50040;
+                color: #e50040;
+            }
+        }
+    }
+}
