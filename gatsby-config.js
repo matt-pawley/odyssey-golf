@@ -34,6 +34,12 @@ module.exports = {
                 icon: `src/images/logo.png`, // This path is relative to the root of the site.
             },
         },
+        {
+            resolve: 'gatsby-plugin-mailchimp',
+            options: {
+                endpoint: 'https://cookridgehall.us7.list-manage.com/subscribe/post?u=8cd676a43cc44689cba5a5626&amp;id=22d2a3d716', // see instructions section below
+            },
+        },
         // this (optional) plugin enables Progressive Web App + Offline functionality
         // To learn more, visit: https://gatsby.dev/offline
         'gatsby-plugin-offline',

@@ -1,4 +1,5 @@
 import React from "react"
+import addToMailchimp from 'gatsby-plugin-mailchimp'
 
 import Layout from "../components/layout"
 import SEO from "../components/seo"
@@ -15,7 +16,9 @@ export default class extends React.Component {
     state = {
         name: '',
         email: '',
+        error: false,
         isComplete: false,
+        isLoading: false,
     }
     
     handleInputChange = event => {
@@ -26,12 +29,28 @@ export default class extends React.Component {
         this.setState({ [name]: value });
     }
 
-    onSubmit = event => {
+    onSubmit = async event => {
         event.preventDefault();
-        this.setState({ isComplete: true });
+        this.setState({ isLoading: true, error: false });
+
+        const [ firstName, ...restOfName ] = this.state.name.split(' ');
+        
+        const response = await addToMailchimp(this.state.email, {
+            FNAME: firstName,
+            LNAME: restOfName.join(' '),
+        });
+
+        if (response.result === 'error') {
+            this.setState({ isLoading: false, isComplete: false, error: response.msg });
+            return;
+        }
+        
+        this.setState({ isLoading: false, isComplete: true });
     }
 
     render() {
+        const { isLoading, error } = this.state;
+
         return (
             <Layout>
                 <SEO title="Home" keywords={[`golf`, `odyssey`]} />
@@ -49,6 +68,8 @@ export default class extends React.Component {
 
                     {!this.state.isComplete && (
                         <form onSubmit={this.onSubmit} className="mb-4">
+                            {error && <p>{error}</p>}
+
                             <div className="row mb-2">
                                 <Input 
                                     required
@@ -71,7 +92,7 @@ export default class extends React.Component {
                                 />
                             </div>
 
-                            <Button className="button">Send</Button>
+                            <Button className="button">{isLoading ? 'Loading' : 'Send'}</Button>
                         </form>
                     )}
 
@@ -80,8 +101,8 @@ export default class extends React.Component {
                     </div>
 
                     <div className="social-links">
-                        <SocialLink href="https://www.facebook.com" icon={FaFacebook} />
-                        <SocialLink href="https://twitter.com/golfodysseyuk" icon={FaTwitter} />
+                        <SocialLink href="https://www.facebook.com/GolfOdyssey" icon={FaFacebook} />
+                        <SocialLink href="https://twitter.com/MyGolfOdyssey" icon={FaTwitter} />
                         <SocialLink href="http://instagram.com/golfodyssey" icon={FaInstagram} />
                     </div>
                 </div>

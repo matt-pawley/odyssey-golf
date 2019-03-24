@@ -7,6 +7,7 @@
   "dependencies": {
     "gatsby": "^2.1.19",
     "gatsby-image": "^2.0.30",
+    "gatsby-plugin-mailchimp": "git+https://github.com/benjaminhoffman/gatsby-plugin-mailchimp.git#gatsby-v2",
     "gatsby-plugin-manifest": "^2.0.20",
     "gatsby-plugin-offline": "^2.0.24",
     "gatsby-plugin-postcss": "^2.0.5",
